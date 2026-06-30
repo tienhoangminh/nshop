@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.Client.Abstra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService.MongoDb", "Catalog\nShop.Catalog.SyncService.MongoDb\nShop.Catalog.SyncService.MongoDb.csproj", "{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Infrastructure.KafkaPullService", "Infrastructure\nShop.Infrastructure.KafkaPullService\nShop.Infrastructure.KafkaPullService.csproj", "{7C97480C-E23C-4B9A-B9F2-D94420274DFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C97480C-E23C-4B9A-B9F2-D94420274DFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C97480C-E23C-4B9A-B9F2-D94420274DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C97480C-E23C-4B9A-B9F2-D94420274DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C97480C-E23C-4B9A-B9F2-D94420274DFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DD864A69-21C2-409F-B962-A23C7AACD42F} = {5B552AE2-E03C-4A77-A502-FF0EF9E439D7}
@@ -111,5 +117,6 @@ Global
 		{FEDA7505-7715-4425-820F-A2ACF8E73C2A} = {C3ABF23A-CE56-4AC7-AC09-240079B517B8}
 		{F49792EF-E05B-4A64-AD25-4F52CFE78EFA} = {C3ABF23A-CE56-4AC7-AC09-240079B517B8}
 		{8D51775B-8B9D-4A58-B9FB-15D1FE69432A} = {C3ABF23A-CE56-4AC7-AC09-240079B517B8}
+		{7C97480C-E23C-4B9A-B9F2-D94420274DFB} = {5B552AE2-E03C-4A77-A502-FF0EF9E439D7}
 	EndGlobalSection
 EndGlobal

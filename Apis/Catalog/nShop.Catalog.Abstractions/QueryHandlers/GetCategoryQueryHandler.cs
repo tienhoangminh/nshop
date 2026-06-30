@@ -1,5 +1,3 @@
-using nShop.Catalog.Queries;
-
 namespace nShop.Catalog.QueryHandlers
 {
     public class GetCategoryQueryHandler : IRequestHandler<GetCategoryQuery, Result<GetCategoryResponse>>
@@ -21,5 +19,10 @@ namespace nShop.Catalog.QueryHandlers
 
             return Result<GetCategoryResponse>.Success(new GetCategoryResponse() { Category = category });
         }
+    }
+    
+    public class GetCategoryQuery : IRequest<Result<GetCategoryResponse>>
+    {
+        public Guid CategoryId { get; set; }
     }
 }
