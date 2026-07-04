@@ -15,6 +15,9 @@ public class Product : IAggregate, ITenancyEntity
     public string[] Images { get; set; } = [];
     public Guid[] Groups { get; set; } = [];
     public Guid TenantId { get; set; }
+    public List<Variant> Variants { get; set; } = [];
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public ulong Version { get; set; }
     public IEnumerable<IDomainEvent> PendingEvents => _changes;
 
@@ -22,7 +25,7 @@ public class Product : IAggregate, ITenancyEntity
     public Product() {
     }
     
-    public static Product Create(Guid id, Guid tenantId, string name, string description, Guid categoryId, double price, string[] tags, string slug, string[] images, Guid[] groups)
+    public static Product Create(Guid id, Guid tenantId, string name, string description, Guid categoryId, double price, string[] tags, string slug, string[] images, Guid[] groups, DateTime? timeStamp = null)
     {
         var product = new Product
         {
@@ -36,6 +39,8 @@ public class Product : IAggregate, ITenancyEntity
             Slug = slug,
             Images = images,
             Groups = groups,
+            CreatedAt = timeStamp ?? DateTime.UtcNow,
+            UpdatedAt = timeStamp ?? DateTime.UtcNow,
 
             Version = 0,
         };
@@ -51,7 +56,7 @@ public class Product : IAggregate, ITenancyEntity
             Slug = slug,
             Images = images,
             Groups = groups,
-            Timestamp = DateTime.UtcNow
+            Timestamp = product.CreatedAt
         };
 
         product.Apply(@event);

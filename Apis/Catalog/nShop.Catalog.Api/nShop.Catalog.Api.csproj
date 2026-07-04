@@ -11,12 +11,14 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Aspire.Confluent.Kafka" Version="8.2.2" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.57.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Infrastructure\EventStore\nShop.Infrastructure.EventStore.EventStoreDB\nShop.Infrastructure.EventStore.EventStoreDB.csproj" />
+      <ProjectReference Include="..\..\..\Infrastructure\nShop.Infrastructure.EventBus.Kafka\nShop.Infrastructure.EventBus.Kafka.csproj" />
       <ProjectReference Include="..\..\..\nShop.ServiceDefaults\nShop.ServiceDefaults.csproj" />
       <ProjectReference Include="..\nShop.Catalog.Abstractions\nShop.Catalog.Abstractions.csproj" />
     </ItemGroup>

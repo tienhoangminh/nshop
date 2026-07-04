@@ -1,3 +1,6 @@
+using nShop.Infrastructure.EventBus.Kafka;
+using nShop.Shared;
+
 namespace nShop.Catalog.Api.Bootstrapping;
 
 public static class RegisterServicesExtensions
@@ -22,6 +25,8 @@ public static class RegisterServicesExtensions
 
     private static void RegisterEventBus(this WebApplicationBuilder builder)
     {
+        builder.AddKafkaProducer<string, string>(ServiceConnectionNames.EventBus);
+        builder.Services.AddKafkaEventBus(ServiceConnectionNames.CatalogEventBusTopic);
     }
 
     private static void RegisterSyncFactory(this WebApplicationBuilder builder)
