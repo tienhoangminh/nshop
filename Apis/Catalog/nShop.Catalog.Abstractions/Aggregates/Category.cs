@@ -2,11 +2,13 @@ namespace nShop.Catalog.Aggregates;
 
 public class Category : IAggregate, ITenancyEntity
 {
-    public Guid ProductId { get; private set; }
+    public Guid Id { get; private set; }
+    public Guid CategoryId => Id;
     public Guid TenantId { get; set; }
     public Guid ParentId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public CategoryStates State { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public ulong Version { get; set; }
@@ -39,15 +41,37 @@ public class Category : IAggregate, ITenancyEntity
 
     public Category Update(string name, string slug, Guid parentId)
     {
-        var @event = new CategoryUpdatedEvent { CategoryId = ProductId, Name = name, Slug = slug, ParentId = parentId, Timestamp = DateTime.UtcNow };
+        var @event = new CategoryUpdatedEvent { CategoryId = CategoryId, Name = name, Slug = slug, ParentId = parentId, Timestamp = DateTime.UtcNow };
         Apply(@event);
         _changes.Add(@event);
         return this;
     }
     
+    public void Publish(DateTime? timeStamp = null)
+    {
+        var @event = new CategoryPublishedEvent()
+        {
+            CategoryId = CategoryId,
+            Timestamp = timeStamp ?? DateTime.UtcNow
+        };
+        Apply(@event);
+        _changes.Add(@event);
+    }
+    
+    public void Unpublish(DateTime? timeStamp = null)
+    {
+        var @event = new CategoryUnpublishedEvent()
+        {
+            CategoryId = CategoryId,
+            Timestamp = timeStamp ?? DateTime.UtcNow
+        };
+        Apply(@event);
+        _changes.Add(@event);
+    }
+    
     private void Apply(CategoryCreatedEvent e)
     {
-        ProductId = e.CategoryId;
+        Id = e.CategoryId;
         Name = e.Name;
         CreatedAt = e.Timestamp;
         UpdatedAt = e.Timestamp;
@@ -64,6 +88,20 @@ public class Category : IAggregate, ITenancyEntity
         UpdatedAt = e.Timestamp;
     }
     
+    private void Apply(CategoryPublishedEvent e)
+    {
+        State = CategoryStates.Published;
+
+        UpdatedAt = e.Timestamp;
+    }
+    
+    private void Apply(CategoryUnpublishedEvent e)
+    {
+        State = CategoryStates.Unpublished;
+
+        UpdatedAt = e.Timestamp;
+    }
+    
     public void Project(object @event)
     {
         switch (@event)
@@ -74,6 +112,12 @@ public class Category : IAggregate, ITenancyEntity
             case CategoryUpdatedEvent e:
                 Apply(e);
                 break;
+            case CategoryPublishedEvent e:
+                Apply(e);
+                break;
+            case CategoryUnpublishedEvent e:
+                Apply(e);
+                break;
         }
     }
     
@@ -81,4 +125,9 @@ public class Category : IAggregate, ITenancyEntity
     {
         _changes.Clear();
     }
+}
+
+public enum CategoryStates {
+    Unpublished = 0,
+    Published = 1,
 }

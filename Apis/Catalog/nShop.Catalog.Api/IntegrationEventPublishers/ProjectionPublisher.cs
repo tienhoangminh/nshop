@@ -1,5 +1,3 @@
-using nShop.Catalog.Api.Helpers;
-
 namespace nShop.Catalog.Api.IntegrationEventPublishers;
 
 public class ProjectionPublisher : INotificationHandler<DomainEventWrapper>

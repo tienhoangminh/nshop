@@ -1,4 +1,3 @@
-using AutoMapper;
 using nShop.Catalog.IntegrationEvents;
 
 namespace nShop.Catalog.Api.AutoMapperProfiles;

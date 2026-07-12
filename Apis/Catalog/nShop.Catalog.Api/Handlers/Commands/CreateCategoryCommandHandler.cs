@@ -1,4 +1,3 @@
-using nShop.Catalog.Api.Helpers;
 using nShop.Shared;
 
 namespace nShop.Catalog.Api.Handlers.Commands;
@@ -63,4 +62,12 @@ public class CreateCategoryCommand : IRequest<Result<CreateCategoryResponse>>, I
 public class CreateCategoryResponse
 {
     public Guid Id { get; set; }
+}
+
+public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+{
+    public CreateCategoryCommandValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty();
+    }
 }

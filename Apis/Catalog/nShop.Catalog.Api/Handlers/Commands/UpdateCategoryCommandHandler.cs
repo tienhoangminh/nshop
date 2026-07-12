@@ -1,6 +1,4 @@
-﻿using nShop.Catalog.Api.Helpers;
-
-namespace nShop.Catalog.Api.Handlers.Commands;
+﻿namespace nShop.Catalog.Api.Handlers.Commands;
 
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Result<UpdateCategoryResponse>>
 {
@@ -39,7 +37,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
         return Result<UpdateCategoryResponse>.Success(new UpdateCategoryResponse
         {
-            Id = category.ProductId,
+            Id = category.CategoryId,
             Name = category.Name,
             Slug = category.Slug,
             ParentId = category.ParentId,

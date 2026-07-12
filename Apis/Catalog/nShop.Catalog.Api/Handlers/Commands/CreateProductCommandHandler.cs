@@ -1,4 +1,3 @@
-using nShop.Catalog.Api.Helpers;
 using nShop.Shared;
 
 namespace nShop.Catalog.Api.Handlers.Commands;

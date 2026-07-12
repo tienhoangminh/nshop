@@ -1,5 +1,3 @@
-using AutoMapper;
-using nShop.Catalog.Api.Helpers;
 using nShop.Catalog.IntegrationEvents;
 using nShop.Core.IntegrationEvent;
 

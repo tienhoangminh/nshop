@@ -2,116 +2,93 @@ syntax = "proto3";
 
 option csharp_namespace = "nShop.Catalog.Api";
 
+package catalog;
+
 service CatalogService {
-  rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryResponse);
-  rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryResponse);
+  rpc CreateCategory (GrpcCreateCategoryRequest) returns (GrpcCreateCategoryResponse);
+  rpc UpdateCategory (GrpcUpdateCategoryRequest) returns (GrpcUpdateCategoryResponse);
+  rpc FindCategories (GrpcFindCategoriesRequest) returns (GrpcFindCategoriesResponse);
+  rpc FindCategoryById (GrpcFindCategoryByIdRequest) returns (GrpcFindCategoryByIdResponse);
+  rpc PublishCategory (GrpcPublishCategoryRequest) returns (GrpcPublishCategoryResponse);
+  rpc UnpublishCategory (GrpcUnpublishCategoryRequest) returns (GrpcUnpublishCategoryResponse);
 
-  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
-  rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse);
+  rpc CreateProduct (GrpcCreateProductRequest) returns (GrpcCreateProductResponse);
+  rpc UpdateProduct (GrpcUpdateProductRequest) returns (GrpcUpdateProductResponse);
+  rpc FindProducts (GrpcFindProductsRequest) returns (GrpcFindProductsResponse);
+  rpc FindProductById (GrpcFindProductByIdRequest) returns (GrpcFindProductByIdResponse);
+  rpc UpdateProductGroups (GrpcUpdateProductGroupsRequest) returns (GrpcUpdateProductGroupsResponse);
+  rpc PublishProduct (GrpcPublishProductRequest) returns (GrpcPublishProductResponse);
+  rpc UnpublishProduct (GrpcUnpublishProductRequest) returns (GrpcUnpublishProductResponse);
 
-  rpc FindProducts (FindProductsRequest) returns (FindProductsResponse);
-  rpc FindProductById (FindProductByIdRequest) returns (FindProductByIdResponse);
+  rpc AddVariationDimensions (GrpcAddVariationDimensionsRequest) returns (GrpcAddVariationDimensionsResponse);
+
+  rpc AddVariant(GrpcAddVariantRequest) returns (GrpcAddVariantResponse);
+  rpc UpdateVariantPrice(GrpcUpdateVariantPriceRequest) returns (GrpcUpdateVariantPriceResponse);
+  rpc UpdateVariant(GrpcUpdateVariantRequest) returns (GrpcUpdateVariantResponse);
+
+  rpc FulltextSearch(GrpcFulltextSearchRequest) returns (GrpcFulltextSearchResponse);
 }
 
-message Paging {
+message GrpcPaging {
   int64 offset = 1;
   int64 limit = 2;
 }
 
-message ResponsePagination {
+message GrpcResponsePagination {
   int64 offset = 1;
   int64 page_length = 2;
   int64 total = 3;
 }
 
-message CreateCategoryRequest {
+message GrpcCreateCategoryRequest {
   string tenant_id = 1;
   string parent_id = 2;
   string name = 3;
   string slug = 4;
 }
 
-message CreateCategoryResponse {
-  string id = 1;
-  string status_code = 2; // ok if no error
-  string reason_phrase = 3; // error message
+message GrpcCreateCategoryResponse {
+  string category_id = 1;
 }
 
-message UpdateCategoryRequest {
+message GrpcUpdateCategoryRequest {
   string category_id = 1;
   string parent_id = 2;
   string name = 3;
   string slug = 4;
 }
 
-message UpdateCategoryResponse {
-  string id = 1;
-  string status_code = 2; // ok if no error
-  string reason_phrase = 3; // error message
+message GrpcUpdateCategoryResponse {
 }
 
-message CreateProductRequest {
-  string tenant_id = 1;
-  string category_id = 2;
-  string name = 3;
-  string description = 4;
-  double price = 5;
-  repeated string tags = 6;
-  string slug = 7;
-  repeated string images = 8;
-  repeated string groups = 9;
+message GrpcPublishCategoryRequest {
+  string category_id = 1;
 }
 
-message CreateProductResponse {
-  string id = 1;
-  string status_code = 2; // ok if no error
-  string reason_phrase = 3; // error message
+message GrpcPublishCategoryResponse {
 }
 
-message UpdateProductRequest {
-  string product_id = 1;
-  string category_id = 2;
-  string name = 3;
-  string description = 4;
-  repeated string tags = 6;
-  string slug = 7;
-  repeated string images = 8;
-  repeated string groups = 9;
+message GrpcUnpublishCategoryRequest {
+  string category_id = 1;
 }
 
-message UpdateProductResponse {
-  string id = 1;
-  string status_code = 2; // ok if no error
-  string reason_phrase = 3; // error message
-}
-
-message UpdateProductPriceRequest {
-  string product_id = 1;
-  double normal_price = 2;
-  double discount_price = 3;
-}
-
-message UpdateProductPriceResponse {
-  string id = 1;
-  string status_code = 2; // ok if no error
-  string reason_phrase = 3; // error message
-}
-
-message FindCategoriesRequest {
-  repeated string ids = 1;
-  string tenant_id = 2;
-  string parent_id = 3;
+message GrpcUnpublishCategoryResponse {
 }
 
 message GrpcCategory {
   string id = 1;
-  string parent_id = 2;
-  string name = 3;
-  string slug = 4;
+  string tenant_id = 2;
+  string parent_id = 3;
+  string name = 4;
+  string slug = 5;
 }
 
-message FindCategoriesResponse {
-  repeated GrpcCategory categories = 1;
+message GrpcVariationDimension {
+  string name = 1;
+  string display_name = 2;
+  string display_position = 3;
+  GrpcVariationDimensionDisplayStyles display_style = 4;
+  repeated string values = 5;
 }
 
 message GrpcProduct {
@@ -119,15 +96,97 @@ message GrpcProduct {
   string category_id = 2;
   string name = 3;
   string description = 4;
+  repeated string tags = 5;
+  string slug = 6;
+  repeated string images = 7;
+  repeated string groups = 8;
+  string tenant_id = 9;
+  repeated GrpcVariationDimension variation_dimensions = 10;
+  repeated GrpcVariant variants = 11;
+}
+
+message GrpcDimensionValue {
+  string name = 1;
+  string value = 2;
+}
+
+message GrpcVariant {
+  string id = 1;
+  string product_id = 2;
+  string name = 3;
+  string sku = 4;
+  bool is_default = 5;
+  double price = 6;
+  double discount_price = 7;
+  repeated GrpcDimensionValue dimension_values = 8;
+}
+
+message GrpcFindCategoriesRequest {
+  repeated string ids = 1;
+  string tenant_id = 2;
+  string parent_id = 3;
+  GrpcPaging paging = 4;
+}
+
+message GrpcFindCategoriesResponse {
+  repeated GrpcCategory categories = 1;
+}
+
+message GrpcFindCategoryByIdRequest {
+  string category_id = 1;
+}
+
+message GrpcFindCategoryByIdResponse {
+  optional GrpcCategory category = 1;
+  GrpcResponsePagination pagination = 2;
+}
+
+message GrpcCreateProductRequest {
+  string tenant_id = 1;
+  string category_id = 2;
+  string name = 3;
+  string description = 4;
   double price = 5;
   repeated string tags = 6;
   string slug = 7;
   repeated string images = 8;
   repeated string groups = 9;
-  string tenant_id = 10;
 }
 
-message FindProductsRequest {
+message GrpcCreateProductResponse {
+  string product_id = 1;
+}
+
+message GrpcUpdateProductRequest {
+  string product_id = 1;
+  string category_id = 2;
+  string name = 3;
+  string description = 4;
+  repeated string tags = 6;
+  string slug = 7;
+  repeated string images = 8;
+  repeated string groups = 9;
+}
+
+message GrpcUpdateProductResponse {
+}
+
+message GrpcUpdateVariantPriceRequest {
+  string product_id = 1;
+  string variant_id = 2;
+  double price = 3;
+  double discount_price = 4;
+}
+
+message GrpcUpdateVariantPriceResponse {
+}
+
+enum GrpcVariationDimensionDisplayStyles {
+  TEXT = 0;
+  COLOR = 1;
+}
+
+message GrpcFindProductsRequest {
   message Filters {
     repeated string ids = 1;
     string name = 2;
@@ -140,18 +199,92 @@ message FindProductsRequest {
   }
   string tenant_id = 1;
   Filters filters = 2;
-  Paging paging = 3;
+  GrpcPaging paging = 3;
 }
 
-message FindProductsResponse {
+message GrpcFindProductsResponse {
   repeated GrpcProduct products = 1;
-  ResponsePagination pagination = 2;
+  GrpcResponsePagination pagination = 2;
 }
 
-message FindProductByIdRequest {
+message GrpcFindProductByIdRequest {
   string product_id = 1;
 }
 
-message FindProductByIdResponse {
+message GrpcFindProductByIdResponse {
   optional GrpcProduct product = 1;
+}
+
+message GrpcUpdateProductGroupsRequest {
+  string product_id = 1;
+  repeated string groups = 2;
+}
+
+message GrpcUpdateProductGroupsResponse {
+}
+
+message GrpcPublishProductRequest {
+  string product_id = 1;
+}
+
+message GrpcPublishProductResponse {
+}
+
+message GrpcUnpublishProductRequest {
+  string product_id = 1;
+}
+
+message GrpcUnpublishProductResponse {
+}
+
+message GrpcAddVariationDimensionsRequest {
+  string product_id = 1;
+  repeated GrpcVariationDimension dimensions = 2;
+}
+
+message GrpcAddVariationDimensionsResponse {
+}
+
+message GrpcAddVariantRequest {
+  string product_id = 1;
+  string name = 2;
+  string sku = 3;
+  double price = 4;
+  double discount_price = 5;
+  repeated GrpcDimensionValue dimension_values = 6;
+}
+
+message GrpcAddVariantResponse {
+  string variant_id = 1;
+}
+
+message GrpcUpdateVariantRequest {
+  string product_id = 1;
+  string variant_id = 2;
+  string name = 3;
+  string sku = 4;
+}
+
+message GrpcUpdateVariantResponse {
+}
+
+message GrpcFulltextSearchRequest {
+  message Filters {
+    double price_from = 1;
+    double price_to = 2;
+  }
+
+  string tenant_id = 1;
+  string query = 2;
+  Filters filters = 3;
+  GrpcPaging paging = 4;
+}
+
+message GrpcFulltextSearchResponse {
+  message GrpcFulltextSearchProduct {
+    string product_id = 1;
+    string name = 2;
+  }
+  repeated GrpcFulltextSearchProduct products = 1;
+  GrpcResponsePagination pagination = 2;
 }

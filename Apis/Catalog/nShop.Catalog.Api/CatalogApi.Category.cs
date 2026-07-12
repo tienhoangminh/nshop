@@ -2,49 +2,42 @@ using nShop.Catalog.Api.Handlers.Commands;
 
 namespace nShop.Catalog.Api;
 
-public partial class CatalogApi : CatalogService.CatalogServiceBase
+internal partial class CatalogApi
 {
-    public override async Task<CreateCategoryResponse> CreateCategory(CreateCategoryRequest request,
-        ServerCallContext context)
+    public override async Task<GrpcCreateCategoryResponse> CreateCategory(GrpcCreateCategoryRequest request, ServerCallContext context)
     {
         if (Guid.TryParse(request.TenantId, out Guid tenantId) == false)
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid TenantId"));
         if (Guid.TryParse(request.ParentId, out Guid parentId) == false)
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid ParentId"));
-
-        var command = new CreateCategoryCommand(
-            tenantId,
-            parentId,
-            request.Name,
-            request.Slug
-        );
-
-        var result = await mediator.Send(command);
-
-        if (!result.IsSuccess)
+        try
         {
-            return new CreateCategoryResponse
+            var command = mapper.Map<CreateCategoryCommand>(request);
+
+            var result = await mediator.Send(command);
+
+            if (result.IsSuccess)
             {
-                StatusCode = ServiceResultCodes.Error,
-                ReasonPhrase = result.Errors.Any()
-                    ? string.Join(',', result.Errors.Select(e => e.ErrorMessage))
-                    : "Unknown error"
-            };
+                if (result.Value == null)
+                    throw new RpcException(new Status(StatusCode.Internal, "Invalid state: result.Value == null"));
+
+                return new GrpcCreateCategoryResponse
+                {
+                    CategoryId = result.Value.Id.ToString()
+                };
+            }
+            else
+            {
+                throw new RpcException(new Status(StatusCode.Internal, result.Errors.Any() ? string.Join(',', result.Errors.Select(e => e.ErrorMessage)) : "Unknown error"));
+            }
         }
-
-        if (result.Value == null)
-            throw new RpcException(new Status(StatusCode.Internal, "Invalid state: result.Value == null"));
-
-        return new CreateCategoryResponse
+        catch (Exception ex)
         {
-            Id = result.Value.Id.ToString(),
-            StatusCode = ServiceResultCodes.Ok,
-            ReasonPhrase = "OK"
-        };
+            throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+        }
     }
 
-    public override async Task<UpdateCategoryResponse> UpdateCategory(UpdateCategoryRequest request,
-        ServerCallContext context)
+    public override async Task<GrpcUpdateCategoryResponse> UpdateCategory(GrpcUpdateCategoryRequest request, ServerCallContext context)
     {
         if (Guid.TryParse(request.CategoryId, out Guid categoryId) == false)
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid CategoryId"));
@@ -56,29 +49,83 @@ public partial class CatalogApi : CatalogService.CatalogServiceBase
             parentId,
             request.Name,
             request.Slug
-        );
+            );
 
         var result = await mediator.Send(command);
 
-        if (!result.IsSuccess)
+        if (result.IsSuccess)
         {
-            return new UpdateCategoryResponse
+            return new GrpcUpdateCategoryResponse
             {
-                StatusCode = ServiceResultCodes.Error,
-                ReasonPhrase = result.Errors.Any()
-                    ? string.Join(',', result.Errors.Select(e => e.ErrorMessage))
-                    : "Unknown error"
             };
         }
-
-        if (result.Value == null)
-            throw new RpcException(new Status(StatusCode.Internal, "Invalid state: result.Value == null"));
-
-        return new UpdateCategoryResponse
+        else
         {
-            Id = result.Value.Id.ToString(),
-            StatusCode = ServiceResultCodes.Ok,
-            ReasonPhrase = "OK"
+            throw new RpcException(new Status(StatusCode.Internal, result.Errors.Any() ? string.Join(',', result.Errors.Select(e => e.ErrorMessage)) : "Unknown error"));
+        }
+    }
+
+    public override async Task<GrpcFindCategoryByIdResponse> FindCategoryById(GrpcFindCategoryByIdRequest request, ServerCallContext context)
+    {
+        if (Guid.TryParse(request.CategoryId, out Guid categoryId) == false)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid CategoryId"));
+
+        var findResult = await categoryDtoReader.FindByIdAsync(categoryId);
+
+        if (findResult == null)
+            throw new RpcException(new Status(StatusCode.NotFound, "Category not found"));
+
+        return new GrpcFindCategoryByIdResponse
+        {
+            Category = mapper.Map<GrpcCategory>(findResult)
         };
+
+    }
+
+    public async override Task<GrpcPublishCategoryResponse> PublishCategory(GrpcPublishCategoryRequest request, ServerCallContext context)
+    {
+        if (Guid.TryParse(request.CategoryId, out Guid categoryId) == false)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid CategoryId"));
+
+        var command = new PublishCategoryCommand()
+        {
+            CategoryId = categoryId
+        };
+
+        var result = await mediator.Send(command);
+
+        if (result.IsSuccess)
+        {
+            return new GrpcPublishCategoryResponse
+            {
+            };
+        }
+        else
+        {
+            throw new RpcException(new Status(StatusCode.Internal, result.Errors.Any() ? string.Join(',', result.Errors.Select(e => e.ErrorMessage)) : "Unknown error"));
+        }
+    }
+    public async override Task<GrpcUnpublishCategoryResponse> UnpublishCategory(GrpcUnpublishCategoryRequest request, ServerCallContext context)
+    {
+        if (Guid.TryParse(request.CategoryId, out Guid categoryId) == false)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid CategoryId"));
+
+        var command = new UnpublishCategoryCommand()
+        {
+            CategoryId = categoryId
+        };
+
+        var result = await mediator.Send(command);
+
+        if (result.IsSuccess)
+        {
+            return new GrpcUnpublishCategoryResponse
+            {
+            };
+        }
+        else
+        {
+            throw new RpcException(new Status(StatusCode.Internal, result.Errors.Any() ? string.Join(',', result.Errors.Select(e => e.ErrorMessage)) : "Unknown error"));
+        }
     }
 }

@@ -1,19 +1,27 @@
-using AutoMapper;
+using Elastic.Clients.Elasticsearch;
+using nShop.Catalog.Client.Abstractions.Dtos;
+using nShop.Catalog.SyncService.Abstractions;
 
 namespace nShop.Catalog.Api;
 
-public partial class CatalogApi : CatalogService.CatalogServiceBase
+internal partial class CatalogApi : CatalogService.CatalogServiceBase
 {
     private readonly ILogger<CatalogApi> logger;
-    //private readonly IReadModelSyncFactory syncFactory;
+    private readonly IReadModelSyncDataReader<ProductDto> productDtoReader;
+    private readonly IReadModelSyncDataReader<CategoryDto> categoryDtoReader;
+    private readonly ElasticsearchClient elasticsearchClient;
     private readonly IMediator mediator;
     private readonly IMapper mapper;
 
     public CatalogApi(
-        //IReadModelSyncFactory syncFactory, 
+        IReadModelSyncDataReader<ProductDto> productDtoReader,
+        IReadModelSyncDataReader<CategoryDto> categoryDtoReader,
+        ElasticsearchClient elasticsearchClient,
         IMediator mediator, IMapper mapper, ILogger<CatalogApi> logger)
     {
-        //this.syncFactory = syncFactory;
+        this.productDtoReader = productDtoReader;
+        this.categoryDtoReader = categoryDtoReader;
+        this.elasticsearchClient = elasticsearchClient;
         this.mediator = mediator;
         this.mapper = mapper;
         this.logger = logger;
