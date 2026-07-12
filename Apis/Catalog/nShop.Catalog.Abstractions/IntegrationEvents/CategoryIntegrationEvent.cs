@@ -1,5 +1,3 @@
-using nShop.Core.IntegrationEvent;
-
 namespace nShop.Catalog.IntegrationEvents;
 
 public abstract class CategoryIntegrationEvent : IntegrationEvent

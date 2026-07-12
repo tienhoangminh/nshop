@@ -1,4 +1,3 @@
-using nShop.Core.IntegrationEvent;
 using nShop.Shared;
 
 namespace nShop.Catalog.IntegrationEvents;

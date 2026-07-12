@@ -1,5 +1,3 @@
-using nShop.Catalog.DomainEvents;
-
 namespace nShop.Catalog.Aggregates;
 
 public class Variant

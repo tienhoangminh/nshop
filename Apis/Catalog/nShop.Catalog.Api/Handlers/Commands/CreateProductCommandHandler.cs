@@ -1,3 +1,4 @@
+using nShop.Catalog.Api.Helpers;
 using nShop.Shared;
 
 namespace nShop.Catalog.Api.Handlers.Commands;
@@ -30,14 +31,10 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
         foreach (var @event in product.PendingEvents)
         {
-            await mediator.Publish((ProductEvent)@event, cancellationToken);
+            await mediator.Publish(new DomainEventWrapper(@event), cancellationToken);
         }
 
         product.ResetEvents();
-
-        //var productCreatedIntegrationEvent = mapper.Map<Product, ProductCreatedIntegrationEvent>(product);
-
-        //await eventBus.PublishAsync(productCreatedIntegrationEvent, cancellationToken);
 
         return Result<CreateProductResponse>.Success(new CreateProductResponse { ProductId = id });
     }

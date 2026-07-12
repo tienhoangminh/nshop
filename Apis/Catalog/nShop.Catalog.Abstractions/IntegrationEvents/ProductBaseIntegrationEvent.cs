@@ -1,6 +1,3 @@
-using nShop.Catalog.DomainEvents;
-using nShop.Core.IntegrationEvent;
-
 namespace nShop.Catalog.IntegrationEvents;
 
 public class ProductBaseIntegrationEvent : IntegrationEvent

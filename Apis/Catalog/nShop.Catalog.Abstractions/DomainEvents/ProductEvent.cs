@@ -1,6 +1,7 @@
 namespace nShop.Catalog.DomainEvents;
 
-public class ProductEvent : DomainEvent, INotification
+public class ProductEvent : ICatalogEvent
 {
     public Guid ProductId { get; set; }
+    public DateTime Timestamp { get; set; }
 }

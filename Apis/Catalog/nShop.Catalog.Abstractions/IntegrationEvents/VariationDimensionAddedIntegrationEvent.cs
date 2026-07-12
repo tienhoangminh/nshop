@@ -1,7 +1,4 @@
-﻿using nShop.Catalog.DomainEvents;
-using nShop.Core.IntegrationEvent;
-
-namespace nShop.Catalog.IntegrationEvents;
+﻿namespace nShop.Catalog.IntegrationEvents;
 public class VariationDimensionAddedIntegrationEvent : IntegrationEvent
 {
     public Guid ProductId { get; set; }

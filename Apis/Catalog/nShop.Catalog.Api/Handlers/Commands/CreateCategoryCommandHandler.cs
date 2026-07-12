@@ -1,3 +1,4 @@
+using nShop.Catalog.Api.Helpers;
 using nShop.Shared;
 
 namespace nShop.Catalog.Api.Handlers.Commands;
@@ -30,7 +31,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
         foreach (var @event in category.PendingEvents)
         {
-            await mediator.Publish((CategoryEvent)@event, cancellationToken);
+            await mediator.Publish(new DomainEventWrapper(@event), cancellationToken);
         }
 
         category.ResetEvents();

@@ -1,4 +1,6 @@
-﻿namespace nShop.Catalog.Api.Handlers.Commands;
+﻿using nShop.Catalog.Api.Helpers;
+
+namespace nShop.Catalog.Api.Handlers.Commands;
 
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Result<UpdateCategoryResponse>>
 {
@@ -32,12 +34,8 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
         foreach (var @event in category.PendingEvents)
         {
-            await mediator.Publish((CategoryEvent)@event, cancellationToken);
+            await mediator.Publish(new DomainEventWrapper(@event), cancellationToken);
         }
-
-        //var categoryUpdatedIntegrationEvent = mapper.Map<Category, CategoryUpdatedIntegrationEvent>(category);
-
-        //await eventBus.PublishAsync(categoryUpdatedIntegrationEvent, cancellationToken);
 
         return Result<UpdateCategoryResponse>.Success(new UpdateCategoryResponse
         {
