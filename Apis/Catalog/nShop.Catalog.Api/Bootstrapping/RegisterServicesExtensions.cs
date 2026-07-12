@@ -1,3 +1,4 @@
+using nShop.Catalog.ProjectionBus.Kafka;
 using nShop.Infrastructure.EventBus.Kafka;
 using nShop.Shared;
 
@@ -27,6 +28,7 @@ public static class RegisterServicesExtensions
     {
         builder.AddKafkaProducer<string, string>(ServiceConnectionNames.EventBus);
         builder.Services.AddKafkaEventBus(ServiceConnectionNames.CatalogEventBusTopic);
+        builder.Services.AddKafkaProjectionBus(ServiceConnectionNames.CatalogProjectionBus);
     }
 
     private static void RegisterSyncFactory(this WebApplicationBuilder builder)

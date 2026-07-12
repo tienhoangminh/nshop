@@ -21,6 +21,7 @@
       <ProjectReference Include="..\..\..\Infrastructure\nShop.Infrastructure.EventBus.Kafka\nShop.Infrastructure.EventBus.Kafka.csproj" />
       <ProjectReference Include="..\..\..\nShop.ServiceDefaults\nShop.ServiceDefaults.csproj" />
       <ProjectReference Include="..\nShop.Catalog.Abstractions\nShop.Catalog.Abstractions.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.ProjectionBus.Kafka\nShop.Catalog.ProjectionBus.Kafka.csproj" />
     </ItemGroup>
 
 </Project>

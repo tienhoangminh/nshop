@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.AppDefaults", "nShop.AppDefaults\nShop.AppDefaults.csproj", "{49D51634-0DAF-4545-97EA-65ACA1D1CF68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.ProjectionBus.Kafka", "Apis\Catalog\nShop.Catalog.ProjectionBus.Kafka\nShop.Catalog.ProjectionBus.Kafka.csproj", "{1F526E01-6702-4463-8E07-8A0F5A877DD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,10 @@ Global
 		{49D51634-0DAF-4545-97EA-65ACA1D1CF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D51634-0DAF-4545-97EA-65ACA1D1CF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D51634-0DAF-4545-97EA-65ACA1D1CF68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F526E01-6702-4463-8E07-8A0F5A877DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F526E01-6702-4463-8E07-8A0F5A877DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F526E01-6702-4463-8E07-8A0F5A877DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F526E01-6702-4463-8E07-8A0F5A877DD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DD864A69-21C2-409F-B962-A23C7AACD42F} = {5B552AE2-E03C-4A77-A502-FF0EF9E439D7}
@@ -138,5 +144,6 @@ Global
 		{7C97480C-E23C-4B9A-B9F2-D94420274DFB} = {5B552AE2-E03C-4A77-A502-FF0EF9E439D7}
 		{313AA131-5C4B-4F4D-97D3-8CC613E7721D} = {5B552AE2-E03C-4A77-A502-FF0EF9E439D7}
 		{60BB25DD-9667-4181-8024-2E4BDC821118} = {C3ABF23A-CE56-4AC7-AC09-240079B517B8}
+		{1F526E01-6702-4463-8E07-8A0F5A877DD5} = {C3ABF23A-CE56-4AC7-AC09-240079B517B8}
 	EndGlobalSection
 EndGlobal
