@@ -14,11 +14,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Apis\Catalog\nShop.Catalog.Abstractions\nShop.Catalog.Abstractions.csproj" />
-      <ProjectReference Include="..\..\Apis\Catalog\nShop.Catalog.SyncService.Abstractions\nShop.Catalog.SyncService.Abstractions.csproj" />
-      <ProjectReference Include="..\..\Infrastructure\nShop.Infrastructure.KafkaPullService\nShop.Infrastructure.KafkaPullService.csproj" />
-      <ProjectReference Include="..\..\nShop.AppDefaults\nShop.AppDefaults.csproj" />
-      <ProjectReference Include="..\..\nShop.Shared\nShop.Shared.csproj" />
+      <ProjectReference Include="..\..\..\Infrastructure\nShop.Infrastructure.KafkaPullService\nShop.Infrastructure.KafkaPullService.csproj" />
+      <ProjectReference Include="..\..\..\nShop.AppDefaults\nShop.AppDefaults.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.Abstractions\nShop.Catalog.Abstractions.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.Client.Abstractions\nShop.Catalog.Client.Abstractions.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.SyncService.Abstractions\nShop.Catalog.SyncService.Abstractions.csproj" />
       <ProjectReference Include="..\nShop.Catalog.SyncService.MongoDb\nShop.Catalog.SyncService.MongoDb.csproj" />
     </ItemGroup>
 </Project>

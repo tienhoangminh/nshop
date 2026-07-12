@@ -36,13 +36,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.Client.Abstractions", "Apis\Catalog\nShop.Catalog.Client.Abstractions\nShop.Catalog.Client.Abstractions.csproj", "{F49792EF-E05B-4A64-AD25-4F52CFE78EFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService.MongoDb", "Catalog\nShop.Catalog.SyncService.MongoDb\nShop.Catalog.SyncService.MongoDb.csproj", "{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService.MongoDb", "Apis\Catalog\nShop.Catalog.SyncService.MongoDb\nShop.Catalog.SyncService.MongoDb.csproj", "{8D51775B-8B9D-4A58-B9FB-15D1FE69432A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Infrastructure.KafkaPullService", "Infrastructure\nShop.Infrastructure.KafkaPullService\nShop.Infrastructure.KafkaPullService.csproj", "{7C97480C-E23C-4B9A-B9F2-D94420274DFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Infrastructure.EventBus.Kafka", "Infrastructure\nShop.Infrastructure.EventBus.Kafka\nShop.Infrastructure.EventBus.Kafka.csproj", "{313AA131-5C4B-4F4D-97D3-8CC613E7721D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService", "Catalog\nShop.Catalog.SyncService\nShop.Catalog.SyncService.csproj", "{60BB25DD-9667-4181-8024-2E4BDC821118}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.Catalog.SyncService", "Apis\Catalog\nShop.Catalog.SyncService\nShop.Catalog.SyncService.csproj", "{60BB25DD-9667-4181-8024-2E4BDC821118}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nShop.AppDefaults", "nShop.AppDefaults\nShop.AppDefaults.csproj", "{49D51634-0DAF-4545-97EA-65ACA1D1CF68}"
 EndProject

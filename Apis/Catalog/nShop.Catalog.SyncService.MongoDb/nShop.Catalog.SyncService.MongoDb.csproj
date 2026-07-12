@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Apis\Catalog\nShop.Catalog.SyncService.Abstractions\nShop.Catalog.SyncService.Abstractions.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.SyncService.Abstractions\nShop.Catalog.SyncService.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
