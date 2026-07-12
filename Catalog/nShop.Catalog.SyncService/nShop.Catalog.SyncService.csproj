@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-nShop.Catalog.SyncService-3ac6d94a-f19e-421a-b041-48fe941dd7b8</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" Version="13.3.0" />
+        <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="13.4.6" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Apis\Catalog\nShop.Catalog.Abstractions\nShop.Catalog.Abstractions.csproj" />
+      <ProjectReference Include="..\..\Apis\Catalog\nShop.Catalog.SyncService.Abstractions\nShop.Catalog.SyncService.Abstractions.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\nShop.Infrastructure.KafkaPullService\nShop.Infrastructure.KafkaPullService.csproj" />
+      <ProjectReference Include="..\..\nShop.AppDefaults\nShop.AppDefaults.csproj" />
+      <ProjectReference Include="..\..\nShop.Shared\nShop.Shared.csproj" />
+      <ProjectReference Include="..\nShop.Catalog.SyncService.MongoDb\nShop.Catalog.SyncService.MongoDb.csproj" />
+    </ItemGroup>
+</Project>
